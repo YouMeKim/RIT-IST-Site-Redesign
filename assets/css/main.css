@@ -1,8 +1,12 @@
 body {
-	margin:0px;
+	margin:50px 0px 0px 0px;
 	padding:0px;
 	font-family:"Open Sans","Helvetica",sans-serif;
 }
+
+/**************/
+/* NAVIGATION */
+/**************/
 
 #navigation {
 	position:fixed;
@@ -53,8 +57,37 @@ nav ul li a:hover:not(.active) {
 	background-color:#4CAF50;
 }
 
+/***********/
+/* CONTENT */
+/***********/
+
+#wrapper {
+
+}
+
+/**********/
+/* FOOTER */
+/**********/
+
+footer {
+	padding:20px 0px;
+	background-color:rgba(200,200,200,1);
+	color:rgba(75,75,75,1);
+	font-weight:300;
+	font-size:12px;
+}
+
+/******************/
+/* COMMON CLASSES */
+/******************/
+
 .content {
 	width:1000px;
 	margin:0px auto;
 }
-
+.left { text-align:left; }
+.center { text-align:center; }
+.right { text-align:right; }
+.float-left { float:left; }
+.float-center { margin:0px auto; }
+.float-right { float:right; }
