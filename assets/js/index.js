@@ -1,7 +1,9 @@
 var urlAbout = "https://people.rit.edu/~sarics/web_proxy.php?path=about";
+var urlFooter = "https://people.rit.edu/~sarics/web_proxy.php?path=footer";
 
 $(document).ready(function() {
     loadAbout();
+    loadSocial();
 });
 
 function loadAbout() {
@@ -23,5 +25,22 @@ function loadAbout() {
     });
     jqxhr.complete(function() {
 
+    });
+}
+
+function loadSocial() {
+    var socialContainter = $('#index-social-content');
+
+    var jqxhr = $.getJSON(urlFooter)
+    .done(function(data) {
+        var tweet = data.social.tweet;
+        var by = data.social.by;
+        var twitter = data.social.twitter;
+        var facebook = data.social.facebook;
+
+        socialContainter.html("<p id='by'>" + by + "</p><p id='tweet'>" + tweet + "</p><p><a target='_blank' href='" + twitter + "'><i id='twitter' class='fa fa-twitter-square fa-2x'></i></a><a target='_blank' href='" + facebook + "'><i id='facebook' class='fa fa-facebook-square fa-2x'></i></a></p>");
+    })
+    .fail(function() {
+        console.log("error loading json stream from " + urlFooter);
     });
 }

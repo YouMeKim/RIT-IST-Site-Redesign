@@ -22,7 +22,7 @@
 #index-quote {
     min-width: 1000px;
     padding: 50px 0px;
-    background-color: rgba(0,0,0,0.8);
+    background-color: rgb(243,110,33);
     text-align: center;
 }
 #index-quote-content #quote {
@@ -49,3 +49,21 @@
     font-size: 75%;
     text-align: right;
 }
+
+#index-social {
+    min-width: 1000px;
+    padding: 50px 0px;
+}
+#index-social-content {
+    text-align: center;
+}
+#index-social-content #tweet {
+    font-weight: 600;
+    font-size: 18px;
+    color: #555;
+}
+#index-social-content #by {
+    color: rgba(0,0,0,0.5);
+}
+#index-social-content #twitter { margin-right:10px; color: #55acee; }
+#index-social-content #facebook { color: #4c66a4; }
