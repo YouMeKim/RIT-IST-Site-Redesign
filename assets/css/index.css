@@ -1,9 +1,17 @@
-#index-about {
-    min-width: 1000px;
-    padding: 200px 0px;
+body {
     background-image: url("../img/desk-blur.jpg");
     background-repeat: no-repeat;
     background-size: 100%;
+    background-attachment: fixed;
+}
+
+/*********/
+/* ABOUT */
+/*********/
+
+#index-about {
+    min-width: 1000px;
+    padding: 200px 0px;
     color: white;
     text-shadow: 0px 0px 10px rgba(0,0,0,0.3);
     text-align: center;
@@ -18,6 +26,10 @@
 #index-about-content p {
     color: rgba(255,255,255,0.8);
 }
+
+/*********/
+/* QUOTE */
+/*********/
 
 #index-quote {
     min-width: 1000px;
@@ -36,21 +48,89 @@
     display: block;
     position: relative;
     right: 465;
-    color: rgba(243,110,33,0.8);
+    color: rgba(243,110,33,1);
 }
 #index-quote-content #quote-right {
     display: block;
     position: relative;
     left: 465;
-    color: rgba(243,110,33,0.8);
+    color: rgba(243,110,33,1);
 }
-#index-quote-content p:nth-child(2) {
+#index-quote-content h1 { color: #ddd; }
+#index-quote-content p:nth-child(3) {
     color: rgba(255,255,255,0.5);
     font-size: 75%;
     text-align: right;
 }
 
+/****************/
+/* UNDERGRDUATE */
+/****************/
+
+#index-undergraduate {
+    min-width: 1000px;
+    padding: 50px 0px;
+    background-color: rgba(0,0,0,0.5);
+}
+
+/************/
+/* GRADUATE */
+/************/
+
+#index-graduate {
+    min-width: 1000px;
+    padding: 50px 0px;
+    background-color: rgba(243,110,33,0.5);
+}
+
+/**********/
+/* MINORS */
+/**********/
+
+#index-minors {
+    min-width: 1000px;
+    padding: 50px 0px;
+    background-color: rgba(255,255,255,0.5);
+}
+
+/********/
+/* NEWS */
+/********/
+
+#index-news {
+    min-width: 1000px;
+    padding: 50px 0px 80px 0px;
+    background-color: rgba(50,50,50,1);
+}
+#index-news-content {
+    text-align: center;
+}
+#index-news-content h1 {
+    color: #ddd;
+}
+.news-item {
+    background-color: #fff;
+    padding: 20px;
+}
+.news-title {
+    color: rgba(0,0,0,0.7);
+    font-size: 20px;
+}
+.news-date {
+    color: rgba(0,0,0,0.5);
+    font-size: 75%;
+    margin: 0px;
+}
+.news-desc {
+    color: rgba(0,0,0,0.7);
+}
+
+/**********/
+/* SOCIAL */
+/**********/
+
 #index-social {
+    background-color: #fff;
     min-width: 1000px;
     padding: 50px 0px;
 }
