@@ -72,16 +72,25 @@ body {
     padding: 50px 0px;
     background-color: rgba(0,0,0,0.5);
 }
+#index-undergraduate-content {
+    text-align: center;
+}
+#index-undergraduate-content h1 { color: #eee; }
 
 /************/
 /* GRADUATE */
 /************/
 
-#index-graduate {
+#index-degree {
     min-width: 1000px;
     padding: 50px 0px;
-    background-color: rgba(243,110,33,0.5);
+    /* background-color: rgba(243,110,33,0.5); */
+    background-color: rgba(0,0,0,0.5);
 }
+#index-degree-content {
+    text-align: center;
+}
+#index-degree-content h1 { color: #eee; }
 
 /**********/
 /* MINORS */
@@ -92,6 +101,22 @@ body {
     padding: 50px 0px;
     background-color: rgba(255,255,255,0.5);
 }
+#index-minors-content {
+    text-align: center;
+}
+.minors {
+    height: 115px;
+    background-color: red;
+    text-align: center;
+}
+.minors h2 {
+    font-size: 16px;
+}
+.minors-link {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+}
 
 /********/
 /* NEWS */
@@ -100,7 +125,6 @@ body {
 #index-news {
     min-width: 1000px;
     padding: 50px 0px 80px 0px;
-    background-color: rgba(50,50,50,1);
 }
 #index-news-content {
     text-align: center;

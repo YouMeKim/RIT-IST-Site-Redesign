@@ -1,6 +1,8 @@
 var urlAbout = "https://people.rit.edu/~sarics/web_proxy.php?path=about";
 var urlNews = "https://people.rit.edu/~sarics/web_proxy.php?path=news";
 var urlFooter = "https://people.rit.edu/~sarics/web_proxy.php?path=footer";
+var urlDegrees = "https://people.rit.edu/~sarics/web_proxy.php?path=degrees";
+var urlMinors = "https://people.rit.edu/~sarics/web_proxy.php?path=minors";
 
 $(document).ready(function() {
     loadAbout();
@@ -33,11 +35,74 @@ function loadAbout() {
 }
 
 function loadDegrees() {
+    var degreeContainer = $('#index-degree-content');
 
+    var jqxhr = $.getJSON(urlDegrees)
+    .done(function(data) {
+        var undergraduates = data.undergraduate;
+        var graduates = data.graduate;
+        var count = 0;
+        var undergradHtml = "<h1>UNDERGRADUATE DEGREES</h1><div class='split-container'>";
+
+        $.each(undergraduates, function(i, undergrad) {
+            var name = undergrad.degreeName;
+            var title = undergrad.title;
+
+            undergradHtml += "<div class='third'><a class='degrees-link' href='degrees.html?degree=" + name + "'><h2>" + title + "</h2></a></div>";
+        });
+
+        undergradHtml += "</div>";
+        var gradHtml = "<h1>GRADUATE DEGREES</h1><div class='split-container'>";
+
+        $.each(graduates, function(i, grad) {
+            var name = grad.degreeName;
+            var title = grad.title;
+
+            if (title != null) {
+                gradHtml += "<div class='third'><a class='degrees-link' href='degrees.html?degree=" + name + "'><h2>" + title + "</h2></a></div>";
+            }
+        });
+
+        gradHtml += "</div>";
+
+        degreeContainer.html(undergradHtml);
+        degreeContainer.append(gradHtml);
+    })
+    .fail(function() {
+        console.log("error loading json stream from " + urlDegrees);
+    });
 }
 
 function loadMinors() {
+    var minorsContainer = $('#index-minors-content');
 
+    var jqxhr = $.getJSON(urlMinors)
+    .done(function(data) {
+        var minors = data;
+        var count = 0;
+        var html = "<h1>MINORS</h1><div class='split-container' style='margin-bottom: 33px;'>";
+
+        $.each(minors, function(i, minor) {
+            count ++;
+            if (count != 1 && count % 4 == 1) {
+                html += "</div><div class='split-container' style='margin-bottom: 33px;'>";
+            }
+
+            var name = minor.name;
+            var title = minor.title;
+            var desc = minor.description;
+            var courses = minor.courses;
+            var note = minor.note;
+
+            html += "<div class='fourth minors'><a class='minors-link' href='minors.html?minor=" + name + "'><h2>" + title + "</h2></a></div>";
+        });
+
+        html += "</div>";
+        minorsContainer.html(html);
+    })
+    .fail(function() {
+        console.log("error loading json stream from " + urlMinors);
+    });
 }
 
 function loadNews() {

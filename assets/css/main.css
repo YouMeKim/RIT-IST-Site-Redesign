@@ -93,21 +93,29 @@ footer #footer-copyright {
 }
 
 .split-container { overflow: auto; }
-.third {
-    float: left;
-    width:300px;
-    margin-left:33px;
-}
-.third:first-child {
-    margin-left: 0px;
-}
 .half {
     float: left;
     width: 475px;
-    margin-left: 50px;
+    margin-right: 50px;
 }
-.half:first-child {
-    margin-left: 0px;
+.half:nth-child(2n) {
+    margin-right: 0px;
+}
+.third {
+    float: left;
+    width:300px;
+    margin-right: 50px;
+}
+.third:nth-child(3n) {
+    margin-right: 0px;
+}
+.fourth {
+    float: left;
+    width: 225px;
+    margin-right: 33px;
+}
+.fourth:nth-child(4n) {
+    margin-right: 0px;
 }
 
 .left { text-align:left; }
