@@ -1,51 +1,51 @@
 #index-about {
-	min-width: 1000px;
-	padding: 200px 0px;
-	background-image: url("../img/desk-blur.jpg");
-	background-repeat: no-repeat;
-	background-size: 100%;
-	color: white;
-	text-shadow: 0px 0px 10px rgba(0,0,0,0.3);
-	text-align: center;
+    min-width: 1000px;
+    padding: 200px 0px;
+    background-image: url("../img/desk-blur.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    color: white;
+    text-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+    text-align: center;
 }
 #index-about-content h1 {
-	font-size: 275%;
-	color: #f36e21;
+    font-size: 275%;
+    color: #f36e21;
 }
 #index-about-content h2 {
-	font-size: 200%;
+    font-size: 200%;
 }
 #index-about-content p {
-	color: rgba(255,255,255,0.8);
+    color: rgba(255,255,255,0.8);
 }
 
 #index-quote {
-	min-width: 1000px;
-	padding: 50px 0px;
-	background-color: rgba(0,0,0,0.8);
-	text-align: center;
+    min-width: 1000px;
+    padding: 50px 0px;
+    background-color: rgba(0,0,0,0.8);
+    text-align: center;
 }
 #index-quote-content #quote {
-	display: inline-block;
-	padding: 20px 70px;
-	background-color: white;
-	border-radius: 20px;
-	margin-bottom: 0px;
+    display: inline-block;
+    padding: 20px 70px;
+    background-color: white;
+    border-radius: 20px;
+    margin-bottom: 0px;
 }
 #index-quote-content #quote-left {
-	display: block;
-	position: relative;
-	right: 465;
-	color: rgba(243,110,33,0.8);
+    display: block;
+    position: relative;
+    right: 465;
+    color: rgba(243,110,33,0.8);
 }
 #index-quote-content #quote-right {
-	display: block;
-	position: relative;
-	left: 465;
-	color: rgba(243,110,33,0.8);
+    display: block;
+    position: relative;
+    left: 465;
+    color: rgba(243,110,33,0.8);
 }
 #index-quote-content p:nth-child(2) {
-	color: rgba(255,255,255,0.5);
-	font-size: 75%;
-	text-align: right;
+    color: rgba(255,255,255,0.5);
+    font-size: 75%;
+    text-align: right;
 }
