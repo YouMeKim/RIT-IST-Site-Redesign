@@ -74,7 +74,7 @@ function loadDegrees() {
 }
 
 function loadMinors() {
-    var minorsContainer = $('#index-minors-content');
+    var degreeContainer = $('#index-degree-content');
 
     var jqxhr = $.getJSON(urlMinors)
     .done(function(data) {
@@ -98,7 +98,7 @@ function loadMinors() {
         });
 
         html += "</div>";
-        minorsContainer.html(html);
+        degreeContainer.append(html);
     })
     .fail(function() {
         console.log("error loading json stream from " + urlMinors);
