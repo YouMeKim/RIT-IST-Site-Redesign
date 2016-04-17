@@ -1,3 +1,15 @@
 #degree-content {
+    padding: 50px 0px;
+}
+#degree-content h1 {
+    color: #f36e21;
+    font-size: 36px;
+    text-align: center;
+}
+#degree-content h2 {
+    text-align: center;
+    margin: 0px 0px;
+}
+#degree-content h3 {
 
 }
