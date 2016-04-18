@@ -2,6 +2,7 @@ var urlAbout = "https://people.rit.edu/~sarics/web_proxy.php?path=about";
 var urlDegrees = "https://people.rit.edu/~sarics/web_proxy.php?path=degrees";
 var urlMinors = "https://people.rit.edu/~sarics/web_proxy.php?path=minors";
 var urlCourses = "https://people.rit.edu/~sarics/web_proxy.php?path=courses";
+var urlCourse = "https://people.rit.edu/~sarics/web_proxy.php?path=course";
 var urlResources = "https://people.rit.edu/~sarics/web_proxy.php?path=resources";
 var urlEmployment = "https://people.rit.edu/~sarics/web_proxy.php?path=employment";
 var urlMap = "https://people.rit.edu/~sarics/web_proxy.php?path=map";
@@ -15,7 +16,7 @@ var modalContainer;
 $(document).ready(function() {
     modalContainer = $('#modals');
 
-    $.when(loadAbout(), loadDegrees(), loadResources(), loadCoop(), loadPeople(), loadNews(), loadSocial(), loadContactForm()).done(function() {
+    $.when(loadAbout(), loadDegrees(), loadCourse(), loadResources(), loadCoop(), loadPeople(), loadNews(), loadSocial(), loadContactForm()).done(function() {
         $.getScript("assets/js/remodal.js");
     });
 
@@ -169,6 +170,21 @@ function loadDegrees() {
     })
     .fail(function() {
         console.log("error loading json stream from " + urlMinors);
+    });
+
+    return jqxhr;
+}
+
+function loadCourse() {
+    var jqxhr = $.getJSON(urlCourse)
+    .done(function(data) {
+        $.each(data, function(i, course) {
+            var courseContent = "<p class='note'>" + course.courseID + "</p><p>" + course.description + "</p>";
+            createModal(course.courseID, course.title, courseContent);
+        });
+    })
+    .fail(function() {
+        console.log("error loading json stream from " + urlCourse);
     });
 
     return jqxhr;
