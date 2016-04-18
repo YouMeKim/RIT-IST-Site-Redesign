@@ -1,6 +1,7 @@
 var urlAbout = "https://people.rit.edu/~sarics/web_proxy.php?path=about";
 var urlDegrees = "https://people.rit.edu/~sarics/web_proxy.php?path=degrees";
 var urlMinors = "https://people.rit.edu/~sarics/web_proxy.php?path=minors";
+var urlCourses = "https://people.rit.edu/~sarics/web_proxy.php?path=courses";
 var urlResources = "https://people.rit.edu/~sarics/web_proxy.php?path=resources";
 var urlEmployment = "https://people.rit.edu/~sarics/web_proxy.php?path=employment";
 var urlMap = "https://people.rit.edu/~sarics/web_proxy.php?path=map";
@@ -13,8 +14,36 @@ var modalContainer;
 $(document).ready(function() {
     modalContainer = $('#modals');
 
-    $.when(loadAbout(), loadDegrees(), loadMinors(), loadResources(), loadCoop(), loadPeople(), loadNews(), loadSocial()).done(function(loadAbout, loadDegrees, loadMinors, loadNews, loadSocial) {
+    $.when(loadAbout(), loadDegrees(), loadResources(), loadCoop(), loadPeople(), loadNews(), loadSocial()).done(function() {
         $.getScript("assets/js/remodal.js");
+    });
+
+    /*
+    $('a').click(function() {
+        var parts = $(this).href.split("/");
+        var href = parts[parts.length - 1];
+
+        if (href.length > 1) {
+            var target = $(href);
+
+            $('html,body').animate({scrollTop: target.offset().top}, 1000);
+        }
+    });
+    */
+
+    $(function() {
+        $('a[href*="#"]:not([href="#"])').click(function() {
+        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+            if (target.length) {
+                $('html,body').animate({
+                    scrollTop: target.offset().top
+                }, 1000);
+                    return false;
+                }
+            }
+        });
     });
 });
 
@@ -104,12 +133,6 @@ function loadDegrees() {
     .fail(function() {
         console.log("error loading json stream from " + urlDegrees);
     });
-
-    return jqxhr;
-}
-
-function loadMinors() {
-    var degreeContainer = $('#index-degree-content');
 
     var jqxhr = $.getJSON(urlMinors)
     .done(function(data) {
@@ -293,7 +316,7 @@ function loadCoop() {
 
 function loadPeople() {
     var peopleContainer = $('#index-people-content');
-    var html = "<h1>STAFF</h1><div class='split-container'";
+    var html = "<h1>STAFF</h1><div class='split-container'>";
 
     var jqxhr = $.getJSON(urlPeople)
     .done(function(data) {
@@ -301,13 +324,39 @@ function loadPeople() {
         var faculties = data.faculty;
 
         $.each(staffs, function(i, staff) {
-
+            if (i % 5 == 0) {
+                html += "</div><div class='split-container'>";
+            }
+            html += "<div class='fifth person'><a data-remodal-target='" + staff.username + "' href='#'><p><strong>" + staff.name + "</strong><br>" + staff.title + "</p></a></div>";
+            var staffContent = "<img alt='img' src='" + staff.imagePath + "'>";
+            staffContent += "<p class='note'>" + staff.title + " " + staff.tagline + "</p><table>";
+            staffContent += "<tr><td><strong>Office</strong></td><td>" + staff.office + "</td></tr>";
+            staffContent += "<tr><td><strong>Website</strong></td><td> " + staff.website + "</td></tr>";
+            staffContent += "<tr><td><strong>Phone</strong></td><td> " + staff.phone + "</td></tr>";
+            staffContent += "<tr><td><strong>Email</strong></td><td> " + staff.email + "</td></tr>";
+            staffContent += "<tr><td><strong>Twitter</strong></td><td> " + staff.twitter + "</td></tr>";
+            staffContent += "<tr><td><strong>Facebook</strong></td><td> " + staff.facebook + "</td></tr>";
+            staffContent += "</table><p class='note'>" + staff.interestArea + "</p>";
+            createModal(staff.username, staff.name, staffContent);
         });
 
         html += "</div><h1>FACULTY</h1><div class='split-container'>";
 
         $.each(faculties, function(i, faculty) {
-
+            if (i % 5 == 0) {
+                html += "</div><div class='split-container'>";
+            }
+            html += "<div class='fifth person'><a data-remodal-target='" + faculty.username + "' href='#'><p><strong>" + faculty.name + "</strong><br>" + faculty.title + "</p></a></div>";
+            var facultyContent = "<img alt='img' src='" + faculty.imagePath + "'>";
+            facultyContent += "<p class='note'>" + faculty.title + " " + faculty.tagline + "</p><table>";
+            facultyContent += "<tr><td><strong>Office</strong></td><td>" + faculty.office + "</td></tr>";
+            facultyContent += "<tr><td><strong>Website</strong></td><td> " + faculty.website + "</td></tr>";
+            facultyContent += "<tr><td><strong>Phone</strong></td><td> " + faculty.phone + "</td></tr>";
+            facultyContent += "<tr><td><strong>Email</strong></td><td> " + faculty.email + "</td></tr>";
+            facultyContent += "<tr><td><strong>Twitter</strong></td><td> " + faculty.twitter + "</td></tr>";
+            facultyContent += "<tr><td><strong>Facebook</strong></td><td> " + faculty.facebook + "</td></tr>";
+            facultyContent += "</table><p class='note'>" + faculty.interestArea + "</p>";
+            createModal(faculty.username, faculty.name, facultyContent);
         });
 
         html += "</div>";

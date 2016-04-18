@@ -109,7 +109,7 @@ body {
 
 #index-coop {
     padding: 50px 0px;
-    background-color: #000;
+    background-color: rgba(0,0,0,0.5);
     color: #eee;
 }
 #index-cooop-content {
@@ -150,6 +150,30 @@ body {
 #index-people-content h1 {
     text-align: center;
     color: #222;
+}
+#index-people-content .person {
+    height: 175px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 0px 10px;
+    margin-bottom: 31px;
+    text-align: center;
+    background-color: #f36e21;
+}
+#index-people-content .person a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    color: rgba(255,255,255,0.8);
+}
+#index-people-content .person p {
+    display: inline-block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
 }
 
 /********/

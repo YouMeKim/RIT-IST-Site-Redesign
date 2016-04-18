@@ -98,25 +98,25 @@ footer #footer-copyright {
     width: 475px;
     margin-right: 50px;
 }
-.half:nth-child(2n) {
-    margin-right: 0px;
-}
+.half:nth-child(2n) { margin-right: 0px; }
 .third {
     float: left;
     width:300px;
     margin-right: 50px;
 }
-.third:nth-child(3n) {
-    margin-right: 0px;
-}
+.third:nth-child(3n) { margin-right: 0px; }
 .fourth {
     float: left;
     width: 225px;
     margin-right: 33px;
 }
-.fourth:nth-child(4n) {
-    margin-right: 0px;
+.fourth:nth-child(4n) { margin-right: 0px; }
+.fifth {
+    float: left;
+    width: 175px;
+    margin-right: 31px;
 }
+.fifth:nth-child(5n) { margin-right: 0px; }
 
 .left { text-align:left; }
 .center { text-align:center; }
