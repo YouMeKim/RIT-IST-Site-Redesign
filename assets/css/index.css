@@ -39,6 +39,7 @@ body {
 }
 #index-quote-content #quote {
     display: inline-block;
+    width: 860px;
     padding: 20px 70px;
     background-color: white;
     border-radius: 20px;
@@ -47,16 +48,16 @@ body {
 #index-quote-content #quote-left {
     display: block;
     position: relative;
-    right: 465;
+    right: 460;
     color: rgba(243,110,33,1);
 }
 #index-quote-content #quote-right {
     display: block;
     position: relative;
-    left: 465;
+    left: 460;
     color: rgba(243,110,33,1);
 }
-#index-quote-content h1 { color: #ddd; }
+#index-quote-content h1 { color: #eee; }
 #index-quote-content p:nth-child(3) {
     color: rgba(255,255,255,0.5);
     font-size: 75%;
@@ -78,6 +79,19 @@ body {
 }
 #index-degree-content h1 { color: #eee; }
 .minors h2 { font-size: 18px; }
+
+/**********/
+/* PEOPLE */
+/**********/
+
+#index-people {
+    padding: 50px 0px;
+    background-color: #fff;
+}
+#index-people-content h1 {
+    text-align: center;
+    color: #222;
+}
 
 /********/
 /* NEWS */

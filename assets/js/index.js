@@ -3,14 +3,14 @@ var urlNews = "https://people.rit.edu/~sarics/web_proxy.php?path=news";
 var urlFooter = "https://people.rit.edu/~sarics/web_proxy.php?path=footer";
 var urlDegrees = "https://people.rit.edu/~sarics/web_proxy.php?path=degrees";
 var urlMinors = "https://people.rit.edu/~sarics/web_proxy.php?path=minors";
+var urlPeople = "https://people.rit.edu/~sarics/web_proxy.php?path=people";
 
 var modalContainer;
 
 $(document).ready(function() {
     modalContainer = $('#modals');
 
-    $.when(loadAbout(), loadDegrees(), loadMinors(), loadNews(), loadSocial()).done(function(loadAbout, loadDegrees, loadMinors, loadNews, loadSocial) {
-        console.log("all done");
+    $.when(loadAbout(), loadDegrees(), loadMinors(), loadPeople(), loadNews(), loadSocial()).done(function(loadAbout, loadDegrees, loadMinors, loadNews, loadSocial) {
         $.getScript("assets/js/remodal.js");
     });
 });
@@ -27,7 +27,14 @@ function loadAbout() {
         var author = data.quoteAuthor;
 
         aboutContainter.html("<h1>Information Sciences and Technology at RIT</h1><h2>" + title + "</h2><p>" + desc + "</p>");
-        quoteContainer.html("<h1>TESTIMONY</h1><p id='quote'><i id='quote-left' class='fa fa-quote-left fa-2x'></i>" + quote + "<i id='quote-right' class='fa fa-quote-right fa-2x'></i></p><p>" + author + "</p>");
+        quoteContainer.html("<h1>TESTIMONY</h1><p id='quote'><i id='quote-left' class='fa fa-quote-left fa-2x'></i><span id='quote-typist'></span><i id='quote-right' class='fa fa-quote-right fa-2x'></i></p><p>" + author + "</p>");
+
+        jQuery(function($) {
+            $('#quote-typist').typist({
+                speed: 15,
+                text: quote
+            });
+        });
     })
     .fail(function() {
         console.log("error loading json stream from " + urlAbout);
@@ -135,6 +142,36 @@ function loadMinors() {
     })
     .fail(function() {
         console.log("error loading json stream from " + urlMinors);
+    });
+
+    return jqxhr;
+}
+
+function loadPeople() {
+    var peopleContainer = $('#index-people-content');
+    var html = "<h1>STAFF</h1><div class='split-container'";
+
+    var jqxhr = $.getJSON(urlPeople)
+    .done(function(data) {
+        var staffs = data.staff;
+        var faculties = data.faculty;
+
+        $.each(staffs, function(i, staff) {
+
+        });
+
+        html += "</div><h1>FACULTY</h1><div class='split-container'>";
+
+        $.each(faculties, function(i, faculty) {
+
+        });
+
+        html += "</div>";
+
+        peopleContainer.html(html);
+    })
+    .fail(function() {
+        console.log("error loading json stream from " + urlPeople);
     });
 
     return jqxhr;
