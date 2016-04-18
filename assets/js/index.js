@@ -4,12 +4,15 @@ var urlFooter = "https://people.rit.edu/~sarics/web_proxy.php?path=footer";
 var urlDegrees = "https://people.rit.edu/~sarics/web_proxy.php?path=degrees";
 var urlMinors = "https://people.rit.edu/~sarics/web_proxy.php?path=minors";
 
+var modalContainer;
+
 $(document).ready(function() {
-    loadAbout();
-    loadDegrees();
-    loadMinors();
-    loadNews();
-    loadSocial();
+    modalContainer = $('#modals');
+
+    $.when(loadAbout(), loadDegrees(), loadMinors(), loadNews(), loadSocial()).done(function(loadAbout, loadDegrees, loadMinors, loadNews, loadSocial) {
+        console.log("all done");
+        $.getScript("assets/js/remodal.js");
+    });
 });
 
 function loadAbout() {
@@ -32,6 +35,8 @@ function loadAbout() {
     jqxhr.complete(function() {
 
     });
+
+    return jqxhr;
 }
 
 function loadDegrees() {
@@ -47,8 +52,17 @@ function loadDegrees() {
         $.each(undergraduates, function(i, undergrad) {
             var name = undergrad.degreeName;
             var title = undergrad.title;
+            var desc = undergrad.description;
+            var concentrations = undergrad.concentrations;
 
-            undergradHtml += "<div class='third'><a class='degrees-link' href='degrees.html?degree=" + name + "'><h2>" + title + "</h2></a></div>";
+            undergradHtml += "<div class='third'><a class='degrees-link' data-remodal-target='" + name + "' href='#'><h2>" + title + "</h2></a></div>";
+
+            var modalContent = "<p>" + desc + "</p><h3 class='left'>Concentrations</h3><ul>";
+            $.each(concentrations, function (i, concentration) {
+                modalContent += "<li class='left'>" + concentration + "</li>";
+            });
+            modalContent += "</ul>";
+            createModal(name, title, modalContent);
         });
 
         undergradHtml += "</div>";
@@ -57,10 +71,19 @@ function loadDegrees() {
         $.each(graduates, function(i, grad) {
             var name = grad.degreeName;
             var title = grad.title;
+            var desc = grad.description;
+            var concentrations = grad.concentrations;
 
             if (title != null) {
-                gradHtml += "<div class='third'><a class='degrees-link' href='degrees.html?degree=" + name + "'><h2>" + title + "</h2></a></div>";
+                gradHtml += "<div class='third'><a class='degrees-link' data-remodal-target='" + name + "' href='#'><h2>" + title + "</h2></a></div>";
             }
+
+            var modalContent = "<p>" + desc + "</p><h3 class='left'>Concentrations</h3><ul>";
+            $.each(concentrations, function (i, concentration) {
+                modalContent += "<li class='left'>" + concentration + "</li>";
+            });
+            modalContent += "</ul>";
+            createModal(name, title, modalContent);
         });
 
         gradHtml += "</div>";
@@ -71,6 +94,8 @@ function loadDegrees() {
     .fail(function() {
         console.log("error loading json stream from " + urlDegrees);
     });
+
+    return jqxhr;
 }
 
 function loadMinors() {
@@ -94,7 +119,15 @@ function loadMinors() {
             var courses = minor.courses;
             var note = minor.note;
 
-            html += "<div class='fourth minors'><a class='minors-link' href='minors.html?minor=" + name + "'><h2>" + title + "</h2></a></div>";
+            html += "<div class='fourth minors'><a class='minors-link' data-remodal-target='" + name + "' href='#'><h2>" + title + "</h2></a></div>";
+
+            var modalContent = "<p>" + desc + "</p><h3 class='left'>Required Courses</h3><ul>";
+            $.each(courses, function(i, course) {
+                modalContent += "<li class='left'>" + course + "</li>";
+            });
+            modalContent+= "</ul><p class='note'>" + note + "</p>";
+
+            createModal(name, title, modalContent);
         });
 
         html += "</div>";
@@ -103,6 +136,8 @@ function loadMinors() {
     .fail(function() {
         console.log("error loading json stream from " + urlMinors);
     });
+
+    return jqxhr;
 }
 
 function loadNews() {
@@ -116,9 +151,14 @@ function loadNews() {
         $.each(year, function(i, news) {
             var date = news.date;
             var title = news.title;
-            var desc = news.description.substring(0,244) + "...";
+            var desc = news.description;
+            var descShort = desc.substring(0,244) + "...";
 
-            html += "<a data-remodal-target='modal' href='#'><div class='news-item'><h2 class='news-title'>" + title + "</h2><p class='news-date'>" + date + "</p><p class='news-desc'>" + desc + "</p></div></a>";
+            html += "<a data-remodal-target='news" + i + "' href='#'><div class='news-item'><h2 class='news-title'>" + title + "</h2><p class='news-date'>" + date + "</p><p class='news-desc'>" + descShort + "</p></div></a>";
+
+            var id = "news" + i;
+            var content = "<p class='note'>" + date + "</p><p>" + desc + "</p>";
+            createModal(id, title, content);
         });
 
         html += "</div>";
@@ -127,6 +167,8 @@ function loadNews() {
     .fail(function() {
         console.log("error loading json stream from " + urlNews);
     });
+
+    return jqxhr;
 }
 
 function loadSocial() {
@@ -144,4 +186,14 @@ function loadSocial() {
     .fail(function() {
         console.log("error loading json stream from " + urlFooter);
     });
+
+    return jqxhr;
+}
+
+function createModal(id, title, content) {
+    var html = "<div class='remodal' data-remodal-id='" + id + "'><button data-remodal-action='close' class='remodal-close'></button>";
+    html += "<h1>" + title + "</h1>";
+    html += content + "</div>";
+
+    modalContainer.append(html);
 }
