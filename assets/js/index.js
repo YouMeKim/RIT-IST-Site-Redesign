@@ -1,8 +1,10 @@
 var urlAbout = "https://people.rit.edu/~sarics/web_proxy.php?path=about";
 var urlDegrees = "https://people.rit.edu/~sarics/web_proxy.php?path=degrees";
 var urlMinors = "https://people.rit.edu/~sarics/web_proxy.php?path=minors";
-var urlPeople = "https://people.rit.edu/~sarics/web_proxy.php?path=people";
 var urlResources = "https://people.rit.edu/~sarics/web_proxy.php?path=resources";
+var urlEmployment = "https://people.rit.edu/~sarics/web_proxy.php?path=employment";
+var urlMap = "https://people.rit.edu/~sarics/web_proxy.php?path=map";
+var urlPeople = "https://people.rit.edu/~sarics/web_proxy.php?path=people";
 var urlNews = "https://people.rit.edu/~sarics/web_proxy.php?path=news";
 var urlFooter = "https://people.rit.edu/~sarics/web_proxy.php?path=footer";
 
@@ -11,7 +13,7 @@ var modalContainer;
 $(document).ready(function() {
     modalContainer = $('#modals');
 
-    $.when(loadAbout(), loadDegrees(), loadMinors(), loadPeople(), loadResources(), loadNews(), loadSocial()).done(function(loadAbout, loadDegrees, loadMinors, loadNews, loadSocial) {
+    $.when(loadAbout(), loadDegrees(), loadMinors(), loadResources(), loadCoop(), loadPeople(), loadNews(), loadSocial()).done(function(loadAbout, loadDegrees, loadMinors, loadNews, loadSocial) {
         $.getScript("assets/js/remodal.js");
     });
 });
@@ -148,36 +150,6 @@ function loadMinors() {
     return jqxhr;
 }
 
-function loadPeople() {
-    var peopleContainer = $('#index-people-content');
-    var html = "<h1>STAFF</h1><div class='split-container'";
-
-    var jqxhr = $.getJSON(urlPeople)
-    .done(function(data) {
-        var staffs = data.staff;
-        var faculties = data.faculty;
-
-        $.each(staffs, function(i, staff) {
-
-        });
-
-        html += "</div><h1>FACULTY</h1><div class='split-container'>";
-
-        $.each(faculties, function(i, faculty) {
-
-        });
-
-        html += "</div>";
-
-        peopleContainer.html(html);
-    })
-    .fail(function() {
-        console.log("error loading json stream from " + urlPeople);
-    });
-
-    return jqxhr;
-}
-
 function loadResources() {
     var resourcesContainer = $('#index-resources-content');
     var html = "<h1>RESOURCES</h1>";
@@ -235,6 +207,115 @@ function loadResources() {
     })
     .fail(function() {
         console.log("error loading json stream from " + urlResources);
+    });
+
+    return jqxhr;
+}
+
+function loadCoop() {
+    var coopContainer = $('#index-coop-content');
+    var htmlEmployment = "<h1>COOP PROGRAM</h1>";
+    var htmlMap = "";
+
+    // urlEmployment
+
+    var jqxhr = $.getJSON(urlEmployment)
+    .done(function(data) {
+        var introduction = data.introduction;
+        var degreeStatistics = data.degreeStatistics;
+        var employers = data.employers;
+        var careers = data.careers;
+        var coopTable = data.coopTable;
+        var employmentTable = data.employmentTable;
+
+        htmlEmployment += "<p class='thinner center'>" + introduction.title + "</p><div class='split-container'>";
+        $.each(introduction.content, function(i, item) {
+            htmlEmployment += "<div class='half info'><h3>" + item.title + "</h3><p class='note-white'>" + item.description + "</p></div>";
+        });
+        htmlEmployment += "</div>";
+
+        htmlEmployment += "<h2>" + degreeStatistics.title + "</h2><div class='split-container'>";
+        $.each(degreeStatistics.statistics, function(i, stat) {
+            htmlEmployment += "<div class='fourth stat'><h3>" + stat.value + "</h3><p>" + stat.description + "</p></div>";
+        });
+        htmlEmployment += "</div>";
+
+        htmlEmployment += "<div class='split-container'><div class='half'><h2>" + employers.title + "</h2><p>";
+        $.each(employers.employerNames, function(i, emp) {
+            htmlEmployment += emp + "<br>";
+        });
+        htmlEmployment += "</p><a data-remodal-target='coop-employerTable' href='#'><h1>View Past Employers</h1></a></div><div class='half'><h2>" + careers.title + "</h2><p>";
+        $.each(careers.careerNames, function(i, car) {
+            htmlEmployment += car + "<br>";
+        });
+        htmlEmployment += "</p><a data-remodal-target='coop-coopTable' href='#'><h1>View Past Coops</h1></a></div></div><h2>Where Our Students Work</h2>"
+
+        createModal("coop-employerTable", employmentTable.title, "<table id='employerTable' class='display' cellspacing='0' width='100%'><thead><tr><th>Employer</th><th>Degree</th><th>City</th><th>Title</th><th>Start Date</th></tr></thead><tfoot><tr><th>Employer</th><th>Degree</th><th>City</th><th>Title</th><th>Start Date</th></tr></tfoot></table>");
+        createModal("coop-coopTable", coopTable.title, "<table id='coopTable' class='display' cellspacing='0' width='100%'><thead><tr><th>Employer</th><th>Degree</th><th>City</th><th>Term</th></tr></thead><tfoot><tr><th>Employer</th><th>Degree</th><th>City</th><th>Term</th></tr></tfoot></table>");
+
+        $('#employerTable').DataTable({
+            "ajax" : {
+                url : urlEmployment,
+                dataSrc : 'employmentTable.professionalEmploymentInformation'
+            },
+            "columns" : [
+                {"data" : "employer"},
+                {"data" : "degree"},
+                {"data" : "city"},
+                {"data" : "title"},
+                {"data" : "startDate"}
+            ]
+        });
+
+        $('#coopTable').DataTable({
+            "ajax" : {
+                url : urlEmployment,
+                dataSrc : 'coopTable.coopInformation'
+            },
+            "columns" : [
+                {"data" : "employer"},
+                {"data" : "degree"},
+                {"data" : "city"},
+                {"data" : "term"}
+            ]
+        });
+
+        coopContainer.append(htmlEmployment);
+        coopContainer.append("<div id='index-coop-map'></div>");
+        $('#index-coop-map').load(urlMap);
+    })
+    .fail(function() {
+        console.log("error loading json stream from " + urlEmployment);
+    });
+
+    return jqxhr;
+}
+
+function loadPeople() {
+    var peopleContainer = $('#index-people-content');
+    var html = "<h1>STAFF</h1><div class='split-container'";
+
+    var jqxhr = $.getJSON(urlPeople)
+    .done(function(data) {
+        var staffs = data.staff;
+        var faculties = data.faculty;
+
+        $.each(staffs, function(i, staff) {
+
+        });
+
+        html += "</div><h1>FACULTY</h1><div class='split-container'>";
+
+        $.each(faculties, function(i, faculty) {
+
+        });
+
+        html += "</div>";
+
+        peopleContainer.html(html);
+    })
+    .fail(function() {
+        console.log("error loading json stream from " + urlPeople);
     });
 
     return jqxhr;

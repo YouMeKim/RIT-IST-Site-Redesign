@@ -80,19 +80,6 @@ body {
 #index-degree-content h1 { color: #eee; }
 .minors h2 { font-size: 18px; }
 
-/**********/
-/* PEOPLE */
-/**********/
-
-#index-people {
-    padding: 50px 0px;
-    background-color: #fff;
-}
-#index-people-content h1 {
-    text-align: center;
-    color: #222;
-}
-
 /*************/
 /* RESOURCES */
 /*************/
@@ -114,6 +101,55 @@ body {
 }
 #index-resources-content .resource:hover {
     background-color: rgba(255,255,255,0.1);
+}
+
+/********/
+/* COOP */
+/********/
+
+#index-coop {
+    padding: 50px 0px;
+    background-color: #000;
+    color: #eee;
+}
+#index-cooop-content {
+    text-align: center;
+}
+#index-coop-content h1 {
+    text-align: center;
+}
+#index-coop-content h2 {
+    text-align: center;
+}
+#index-coop-content p {
+    text-align: center;
+}
+#index-coop-content .info {
+    text-align: center;
+}
+#index-coop-content .stat {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: #f36e21;
+    height: 225px;
+    padding: 20px;
+    text-align: center;
+}
+#index-coop-content .stat h3 { font-size: 26px }
+#index-coop-content .stat p { font-size: 14px; color: rgba(255,255,255,0.8); }
+
+/**********/
+/* PEOPLE */
+/**********/
+
+#index-people {
+    padding: 50px 0px;
+    background-color: #fff;
+}
+#index-people-content h1 {
+    text-align: center;
+    color: #222;
 }
 
 /********/
