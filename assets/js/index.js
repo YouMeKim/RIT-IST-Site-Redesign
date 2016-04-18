@@ -6,7 +6,7 @@ var urlCourse = "https://people.rit.edu/~sarics/web_proxy.php?path=course";
 var urlResources = "https://people.rit.edu/~sarics/web_proxy.php?path=resources";
 var urlEmployment = "https://people.rit.edu/~sarics/web_proxy.php?path=employment";
 var urlResearch = "https://people.rit.edu/~sarics/web_proxy.php?path=research";
-var urlMap = "https://people.rit.edu/~sarics/web_proxy.php?path=map";
+var urlMap = "http://www.ist.rit.edu/api/map/";
 var urlPeople = "https://people.rit.edu/~sarics/web_proxy.php?path=people";
 var urlNews = "https://people.rit.edu/~sarics/web_proxy.php?path=news";
 var urlContactForm = "https://people.rit.edu/~sarics/web_proxy.php?path=contactForm";
@@ -403,8 +403,6 @@ function loadCoop() {
         });
 
         coopContainer.append(htmlEmployment);
-        coopContainer.append("<div id='index-coop-map'></div>");
-        $('#index-coop-map').load(urlMap);
     })
     .fail(function() {
         console.log("error loading json stream from " + urlEmployment);
