@@ -2,6 +2,15 @@ ISTE.340.01 Client Programming
 Project 2
 Yumi Kim
 
+
+
+jQuery Plugins:
+remodal		:	https://plugins.jquery.com/remodal/
+typist		:	https://plugins.jquery.com/typist/
+datatables	:	https://datatables.net/
+
+
+
 Why I Deserve an A Plus
 			- yumi kim
 
