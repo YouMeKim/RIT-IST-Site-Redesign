@@ -229,3 +229,14 @@ body {
 }
 #index-social-content #twitter { margin-right:10px; color: #55acee; }
 #index-social-content #facebook { color: #4c66a4; }
+
+/****************/
+/* CONTACT FORM */
+/****************/
+
+#index-contact-form {
+    padding: 50px 0px;
+}
+#index-contact-form-content {
+    background-color: #fff;
+}

@@ -7,6 +7,7 @@ var urlEmployment = "https://people.rit.edu/~sarics/web_proxy.php?path=employmen
 var urlMap = "https://people.rit.edu/~sarics/web_proxy.php?path=map";
 var urlPeople = "https://people.rit.edu/~sarics/web_proxy.php?path=people";
 var urlNews = "https://people.rit.edu/~sarics/web_proxy.php?path=news";
+var urlContactForm = "https://people.rit.edu/~sarics/web_proxy.php?path=contactForm";
 var urlFooter = "https://people.rit.edu/~sarics/web_proxy.php?path=footer";
 
 var modalContainer;
@@ -14,7 +15,7 @@ var modalContainer;
 $(document).ready(function() {
     modalContainer = $('#modals');
 
-    $.when(loadAbout(), loadDegrees(), loadResources(), loadCoop(), loadPeople(), loadNews(), loadSocial()).done(function() {
+    $.when(loadAbout(), loadDegrees(), loadResources(), loadCoop(), loadPeople(), loadNews(), loadSocial(), loadContactForm()).done(function() {
         $.getScript("assets/js/remodal.js");
     });
 
@@ -418,6 +419,12 @@ function loadSocial() {
     });
 
     return jqxhr;
+}
+
+function loadContactForm() {
+    $('#index-contact-form-content').load(urlContactForm);
+
+    return true;
 }
 
 function createModal(id, title, content) {
