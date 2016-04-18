@@ -5,6 +5,7 @@ var urlCourses = "https://people.rit.edu/~sarics/web_proxy.php?path=courses";
 var urlCourse = "https://people.rit.edu/~sarics/web_proxy.php?path=course";
 var urlResources = "https://people.rit.edu/~sarics/web_proxy.php?path=resources";
 var urlEmployment = "https://people.rit.edu/~sarics/web_proxy.php?path=employment";
+var urlResearch = "https://people.rit.edu/~sarics/web_proxy.php?path=research";
 var urlMap = "https://people.rit.edu/~sarics/web_proxy.php?path=map";
 var urlPeople = "https://people.rit.edu/~sarics/web_proxy.php?path=people";
 var urlNews = "https://people.rit.edu/~sarics/web_proxy.php?path=news";
@@ -16,7 +17,7 @@ var modalContainer;
 $(document).ready(function() {
     modalContainer = $('#modals');
 
-    $.when(loadAbout(), loadDegrees(), loadCourse(), loadResources(), loadCoop(), loadPeople(), loadNews(), loadSocial(), loadContactForm()).done(function() {
+    $.when(loadAbout(), loadDegrees(), loadMinors(), loadCourses(), loadCourse(), loadResources(), loadCoop(), loadResearch(), loadPeople(), loadNews(), loadSocial(), loadContactForm()).done(function() {
         $.getScript("assets/js/remodal.js");
     });
 
@@ -96,13 +97,26 @@ function loadDegrees() {
             var desc = undergrad.description;
             var concentrations = undergrad.concentrations;
 
+            var courseCode = name;
+            switch (name) {
+                case "wmc":
+                    courseCode = "BSWMC";
+                    break;
+                case "hcc":
+                    courseCode = "BSHCC";
+                    break;
+                case "cit":
+                    courseCode = "BSCIT";
+                    break;
+            }
+
             undergradHtml += "<div class='third'><a class='degrees-link' data-remodal-target='" + name + "' href='#'><h2>" + title + "</h2></a></div>";
 
             var modalContent = "<p>" + desc + "</p><h3 class='left'>Concentrations</h3><ul>";
             $.each(concentrations, function (i, concentration) {
                 modalContent += "<li class='left'>" + concentration + "</li>";
             });
-            modalContent += "</ul>";
+            modalContent += "</ul><h3><a data-remodal-target='" + courseCode + "' href='#'>View All Courses</a></h3>";
             createModal(name, title, modalContent);
         });
 
@@ -115,6 +129,19 @@ function loadDegrees() {
             var desc = grad.description;
             var concentrations = grad.concentrations;
 
+            var courseCode = name;
+            switch (name) {
+                case "ist":
+                    courseCode = "MSIT";
+                    break;
+                case "hci":
+                    courseCode = "MSHCI";
+                    break;
+                case "nsa":
+                    courseCode = "MSNSA";
+                    break;
+            }
+
             if (title != null) {
                 gradHtml += "<div class='third'><a class='degrees-link' data-remodal-target='" + name + "' href='#'><h2>" + title + "</h2></a></div>";
             }
@@ -123,7 +150,7 @@ function loadDegrees() {
             $.each(concentrations, function (i, concentration) {
                 modalContent += "<li class='left'>" + concentration + "</li>";
             });
-            modalContent += "</ul>";
+            modalContent += "</ul><h3><a data-remodal-target='" + courseCode + "' href='#'>View All Courses</a></h3>";
             createModal(name, title, modalContent);
         });
 
@@ -135,6 +162,12 @@ function loadDegrees() {
     .fail(function() {
         console.log("error loading json stream from " + urlDegrees);
     });
+
+    return jqxhr;
+}
+
+function loadMinors() {
+    var degreeContainer = $('#index-degree-content');
 
     var jqxhr = $.getJSON(urlMinors)
     .done(function(data) {
@@ -154,13 +187,41 @@ function loadDegrees() {
             var courses = minor.courses;
             var note = minor.note;
 
+            var courseCode = name;
+            switch (name) {
+                case "DBDDI-MN":
+                    courseCode = "DBDDIMN";
+                    break;
+                case "GIS-MN":
+                    courseCode = "GISMN";
+                    break;
+                case "MEDINFO-MN":
+                    courseCode = "MEDINFOMN";
+                    break;
+                case "MDDEV-MN":
+                    courseCode = "MDDEVMN";
+                    break;
+                case "MDEV-MN":
+                    courseCode = "MDEVMN";
+                    break;
+                case "NETSYS-MN":
+                    courseCode = "NETSYSMN";
+                    break;
+                case "WEBDD-MN":
+                    courseCode = "WEBDDMN";
+                    break;
+                case "WEBD-MN":
+                    courseCode = "WEBDMN";
+                    break;
+            }
+
             html += "<div class='fourth minors'><a class='minors-link' data-remodal-target='" + name + "' href='#'><h2>" + title + "</h2></a></div>";
 
             var modalContent = "<p>" + desc + "</p><h3 class='left'>Required Courses</h3><ul>";
             $.each(courses, function(i, course) {
                 modalContent += "<li class='left'>" + course + "</li>";
             });
-            modalContent+= "</ul><p class='note'>" + note + "</p>";
+            modalContent+= "</ul><h3><a data-remodal-target='" + courseCode + "' href='#'>View All Courses</a></h3><p class='note'>" + note + "</p>";
 
             createModal(name, title, modalContent);
         });
@@ -170,6 +231,27 @@ function loadDegrees() {
     })
     .fail(function() {
         console.log("error loading json stream from " + urlMinors);
+    });
+
+    return jqxhr;
+}
+
+function loadCourses() {
+    // urlCourses
+
+    var jqxhr = $.getJSON(urlCourses)
+    .done(function(data) {
+        $.each(data, function(i, course) {
+            var courseContent = "<p class='note'>" + course.semester + "</p><ul class='courses'>";
+            $.each(course.courses, function(i, cor) {
+                courseContent += "<li>" + cor + "</li>";
+            });
+            courseContent += "</ul>";
+            createModal(course.degreeName, course.degreeName + " Courses", courseContent);
+        });
+    })
+    .fail(function() {
+        console.log("error loading json stream from " + urlCourses);
     });
 
     return jqxhr;
@@ -221,7 +303,7 @@ function loadResources() {
         html += "<a data-remodal-target='resource-tutorsAndLabInformation' href='#'><div class='resource'><h2>" + tutorsAndLabInformation.title + "</h2><p class='note'>" + tutorsAndLabInformation.description + "</p></div></a>";
         createModal("resource-tutorsAndLabInformation", tutorsAndLabInformation.title, "<a target='_blank' href='" + tutorsAndLabInformation.tutoringLabHoursLink + "'><h3>View Lab Hours</h3></a><p>" + tutorsAndLabInformation.description + "</p>");
         html += "<a data-remodal-target='resource-studentAmbassadors' href='#'><div class='resource'><h2>" + studentAmbassadors.title + "</h2></div></a>";
-        var studentAmbassadorsContent = "<img alt='student ambassadors' src='https://www." + studentAmbassadors.ambassadorsImageSource + "'>";
+        var studentAmbassadorsContent = "<img alt='student ambassadors' src='" + studentAmbassadors.ambassadorsImageSource + "'>";
         studentAmbassadorsContent += "<a target='_blank' href='" + studentAmbassadors.applicationFormLink + "'><h2>Apply Today!</h2></a>";
         $.each(studentAmbassadors.subSectionContent, function(i, subContent) {
             studentAmbassadorsContent += "<h3>" + subContent.title + "</h3><p>" + subContent.description + "</p>";
@@ -331,6 +413,48 @@ function loadCoop() {
     return jqxhr;
 }
 
+function loadResearch() {
+    var researchContainer = $('#index-research-content');
+    var html = "<h1>RESEARCH</h1><div class='split-container'>";
+
+    var jqxhr = $.getJSON(urlResearch)
+    .done(function(data) {
+        var interests = data.byInterestArea;
+        var faculty = data.byFaculty;
+
+        $.each(interests, function(i, interest) {
+            if (i % 4 == 0) {
+                html += "</div><div class='split-container'>";
+            }
+            html += "<div class='fourth research'><a data-remodal-target='research-" + interest.areaName + "' href='#'>" + interest.areaName + "</a></div>";
+            var interestContent = "<p class='citation'>";
+            $.each(interest.citations, function (i, cit) {
+                interestContent += cit + "</p><p class='citation'>";
+            });
+            interestContent += "</p>"
+            createModal("research-" + interest.areaName, interest.areaName, interestContent);
+        });
+
+        html += "</div>";
+
+        $.each(faculty, function(i, fac) {
+            var facContent = "<p class='citation'>";
+            $.each(fac.citations, function (i, cit) {
+                facContent += cit + "</p><p class='citation'>";
+            });
+            facContent += "</p>";
+            createModal("research-" + fac.username, "Research lead by " + fac.facultyName, facContent);
+        });
+
+        researchContainer.html(html);
+    })
+    .fail(function() {
+        console.log("error loading json stream from " + urlResearch);
+    });
+
+    return jqxhr;
+}
+
 function loadPeople() {
     var peopleContainer = $('#index-people-content');
     var html = "<h1>STAFF</h1><div class='split-container'>";
@@ -372,7 +496,7 @@ function loadPeople() {
             facultyContent += "<tr><td><strong>Email</strong></td><td> " + faculty.email + "</td></tr>";
             facultyContent += "<tr><td><strong>Twitter</strong></td><td> " + faculty.twitter + "</td></tr>";
             facultyContent += "<tr><td><strong>Facebook</strong></td><td> " + faculty.facebook + "</td></tr>";
-            facultyContent += "</table><p class='note'>" + faculty.interestArea + "</p>";
+            facultyContent += "</table><a data-remodal-target='research-" + faculty.username + "' href='#'><h3>View Research Papers</h3></a><p class='note'>" + faculty.interestArea + "</p>";
             createModal(faculty.username, faculty.name, facultyContent);
         });
 
