@@ -21,19 +21,6 @@ $(document).ready(function() {
         $.getScript("assets/js/remodal.js");
     });
 
-    /*
-    $('a').click(function() {
-        var parts = $(this).href.split("/");
-        var href = parts[parts.length - 1];
-
-        if (href.length > 1) {
-            var target = $(href);
-
-            $('html,body').animate({scrollTop: target.offset().top}, 1000);
-        }
-    });
-    */
-
     $(function() {
         $('a[href*="#"]:not([href="#"])').click(function() {
         if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
@@ -244,7 +231,7 @@ function loadCourses() {
         $.each(data, function(i, course) {
             var courseContent = "<p class='note'>" + course.semester + "</p><ul class='courses'>";
             $.each(course.courses, function(i, cor) {
-                courseContent += "<li>" + cor + "</li>";
+                courseContent += "<li><a data-remodal-target='" + cor + "' href='#'>" + cor + "</a></li>";
             });
             courseContent += "</ul>";
             createModal(course.degreeName, course.degreeName + " Courses", courseContent);

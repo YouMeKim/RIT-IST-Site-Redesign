@@ -139,9 +139,14 @@ body {
 }
 #index-coop-content .stat h3 { font-size: 26px }
 #index-coop-content .stat p { font-size: 14px; color: rgba(255,255,255,0.8); }
+#index-coop-map-content {
+    height: 450px;
+    width: 765px;
+    margin: 0px auto;
+}
 #map-iframe {
-    height: 500px;
-    width: 850px;
+    height: 450px;
+    width: 765px;
     margin-left: auto;
     margin-right: auto;
     padding: 0 10px 0 10px;
