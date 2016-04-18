@@ -93,6 +93,29 @@ body {
     color: #222;
 }
 
+/*************/
+/* RESOURCES */
+/*************/
+
+#index-resources {
+    padding: 50px 0px;
+    background-color: #f36e21;
+}
+#index-resources-content h1 {
+    color: #eee;
+    text-align: center;
+}
+#index-resources-content .resource {
+    padding: 20px;
+}
+#index-resources-content .resource h2 {
+    text-align: center;
+    color: #eee;
+}
+#index-resources-content .resource:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
 /********/
 /* NEWS */
 /********/

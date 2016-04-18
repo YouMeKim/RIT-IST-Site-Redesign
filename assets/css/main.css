@@ -124,7 +124,7 @@ footer #footer-copyright {
 .float-left { float:left; }
 .float-center { margin:0px auto; }
 .float-right { float:right; }
-.note { font-size: 14px; color: rgba(0,0,0,0.6); }
+.note { font-size: 14px; color: rgba(0,0,0,0.6); font-weight: 300; }
 
 /**********************/
 /* GLOBAL PREFERENCES */

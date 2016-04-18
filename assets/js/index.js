@@ -1,16 +1,17 @@
 var urlAbout = "https://people.rit.edu/~sarics/web_proxy.php?path=about";
-var urlNews = "https://people.rit.edu/~sarics/web_proxy.php?path=news";
-var urlFooter = "https://people.rit.edu/~sarics/web_proxy.php?path=footer";
 var urlDegrees = "https://people.rit.edu/~sarics/web_proxy.php?path=degrees";
 var urlMinors = "https://people.rit.edu/~sarics/web_proxy.php?path=minors";
 var urlPeople = "https://people.rit.edu/~sarics/web_proxy.php?path=people";
+var urlResources = "https://people.rit.edu/~sarics/web_proxy.php?path=resources";
+var urlNews = "https://people.rit.edu/~sarics/web_proxy.php?path=news";
+var urlFooter = "https://people.rit.edu/~sarics/web_proxy.php?path=footer";
 
 var modalContainer;
 
 $(document).ready(function() {
     modalContainer = $('#modals');
 
-    $.when(loadAbout(), loadDegrees(), loadMinors(), loadPeople(), loadNews(), loadSocial()).done(function(loadAbout, loadDegrees, loadMinors, loadNews, loadSocial) {
+    $.when(loadAbout(), loadDegrees(), loadMinors(), loadPeople(), loadResources(), loadNews(), loadSocial()).done(function(loadAbout, loadDegrees, loadMinors, loadNews, loadSocial) {
         $.getScript("assets/js/remodal.js");
     });
 });
@@ -172,6 +173,68 @@ function loadPeople() {
     })
     .fail(function() {
         console.log("error loading json stream from " + urlPeople);
+    });
+
+    return jqxhr;
+}
+
+function loadResources() {
+    var resourcesContainer = $('#index-resources-content');
+    var html = "<h1>RESOURCES</h1>";
+
+    var jqxhr = $.getJSON(urlResources)
+    .done(function(data) {
+        var studyAbroad = data.studyAbroad;
+        var studentServices = data.studentServices;
+        var tutorsAndLabInformation = data.tutorsAndLabInformation;
+        var studentAmbassadors = data.studentAmbassadors;
+        var undergraduateForms = data.forms.undergraduateForms;
+        var graduateForms = data.forms.graduateForms;
+        var coopEnrollment = data.coopEnrollment;
+
+        html += "<a data-remodal-target='resource-studyAbroad' href='#'><div class='resource'><h2>" + studyAbroad.title + "</h2><p class='note'>" + studyAbroad.description + "</p></div></a>";
+        createModal("resource-studyAbroad", studyAbroad.title, "<p>" + studyAbroad.description + "</p><p>" + studyAbroad.places[0].nameOfPlace + "<br><span class='note'>" + studyAbroad.places[0].description + "</span></p><p>" + studyAbroad.places[1].nameOfPlace + "<br><span class='note'>" + studyAbroad.places[1].description + "</span></p>");
+        html += "<a data-remodal-target='resource-studentServices' href='#'><div class='resource'><h2>" + studentServices.title + "</h2></div></a>";
+        var studentServicesContent = "<h2>" + studentServices.academicAdvisors.title + "</h2><p>" + studentServices.academicAdvisors.description + "</p><a target='_blank' href='https://www." + studentServices.academicAdvisors.faq.contentHref + "'>" + studentServices.academicAdvisors.faq.title + "</a>";
+        studentServicesContent += "<h2>" + studentServices.professonalAdvisors.title + "</h2>";
+        $.each(studentServices.professonalAdvisors.advisorInformation, function(i, advisor) {
+            studentServicesContent += "<p><strong>" + advisor.name + "</strong><br>" + advisor.email + "<br>" + advisor.department + "</p>";
+        });
+        studentServicesContent += "<h2>" + studentServices.facultyAdvisors.title + "</h2><p>" + studentServices.facultyAdvisors.description + "</p>";
+        studentServicesContent += "<h2>" + studentServices.istMinorAdvising.title + "</h2>";
+        $.each(studentServices.istMinorAdvising.minorAdvisorInformation, function(i, advisor) {
+            studentServicesContent += "<p><strong>" + advisor.title + "</strong><br>" + advisor.advisor + "<br>" + advisor.email + "</p>";
+        });
+        createModal("resource-studentServices", studentServices.title, studentServicesContent);
+        html += "<a data-remodal-target='resource-tutorsAndLabInformation' href='#'><div class='resource'><h2>" + tutorsAndLabInformation.title + "</h2><p class='note'>" + tutorsAndLabInformation.description + "</p></div></a>";
+        createModal("resource-tutorsAndLabInformation", tutorsAndLabInformation.title, "<a target='_blank' href='" + tutorsAndLabInformation.tutoringLabHoursLink + "'><h3>View Lab Hours</h3></a><p>" + tutorsAndLabInformation.description + "</p>");
+        html += "<a data-remodal-target='resource-studentAmbassadors' href='#'><div class='resource'><h2>" + studentAmbassadors.title + "</h2></div></a>";
+        var studentAmbassadorsContent = "<img alt='student ambassadors' src='https://www." + studentAmbassadors.ambassadorsImageSource + "'>";
+        studentAmbassadorsContent += "<a target='_blank' href='" + studentAmbassadors.applicationFormLink + "'><h2>Apply Today!</h2></a>";
+        $.each(studentAmbassadors.subSectionContent, function(i, subContent) {
+            studentAmbassadorsContent += "<h3>" + subContent.title + "</h3><p>" + subContent.description + "</p>";
+        });
+        studentAmbassadorsContent += "<p class='note'>" + studentAmbassadors.note + "</p>";
+        createModal("resource-studentAmbassadors", studentAmbassadors.title, studentAmbassadorsContent);
+        html += "<a data-remodal-target='resource-undergraduateForms' href='#'><div class='resource'><h2>Undergraduate Forms</h2></div></a>";
+        createModal("resource-undergraduateForms", "Undergraduate Forms", "<a href='http://www.ist.rit.edu/" + undergraduateForms[0].href + "'>" + undergraduateForms[0].formName + "</a>");
+        html += "<a data-remodal-target='resource-graduateForms' href='#'><div class='resource'><h2>Graduate Forms</h2></div></a>";
+        var graduateFormsContent = "";
+        $.each(graduateForms, function(i, form) {
+            graduateFormsContent += "<a href='http://www.ist.rit.edu/" + form.href + "'>" + form.formName + "</a><br>";
+        });
+        createModal("resource-graduateForms", "Graduate Forms", graduateFormsContent);
+        html += "<a data-remodal-target='resource-coopEnrollment' href='#'><div class='resource'><h2>" + coopEnrollment.title + "</h2></div></a>";
+        var coopEnrollmentContent = "";
+        $.each(coopEnrollment.enrollmentInformationContent, function(i, info) {
+            coopEnrollmentContent += "<h3>" + info.title + "</h3><p class='note'>" + info.description + "</p>";
+        });
+        createModal("resource-coopEnrollment", coopEnrollment.title, coopEnrollmentContent);
+
+        resourcesContainer.html(html);
+    })
+    .fail(function() {
+        console.log("error loading json stream from " + urlResources);
     });
 
     return jqxhr;
